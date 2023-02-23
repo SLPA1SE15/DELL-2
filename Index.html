@@ -1,0 +1,81 @@
+https://github.com/SLPA1SE15/DELL-2/blob/de488cde12eee7aab0c93de3399281d5dfb21f8c/index.htn<!DOCTYPE html>
+
+<html>
+
+<head>
+
+	<title>DALL-E 2 Image Generator with ListView</title>
+
+	<script src="https://cdn.jsdelivr.net/npm/@openai/api@0.5.1/browser.js"></script>
+
+</head>
+
+<body>
+
+	<h1>DALL-E 2 Image Generator with ListView</h1>
+
+	<p>Enter a prompt and generate up to 10 images:</p>
+
+	<form>
+
+		<label for="prompt">Prompt:</label>
+
+		<input type="text" id="prompt" name="prompt">
+
+		<button type="button" onclick="generateImages()">Generate</button>
+
+	</form>
+
+	<div id="image-list">
+
+		<h2>Generated Images:</h2>
+
+		<ul id="image-list-view"></ul>
+
+	</div>
+
+	<script>
+
+		const openai = new OpenAI("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");
+
+		async function generateImages() {
+
+			const prompt = document.getElementById("prompt").value;
+
+			const imageListView = document.getElementById("image-list-view");
+
+			imageListView.innerHTML = "";
+
+			for (let i = 0; i < 10; i++) {
+
+				const image = await openai.images.generate({
+
+					model: "image-alpha-001",
+
+					prompt: prompt,
+
+					size: "256x256",
+
+					response_format: "url"
+
+				});
+
+				const listItem = document.createElement("li");
+
+				const imageElement = document.createElement("img");
+
+				imageElement.src = image.data;
+
+				listItem.appendChild(imageElement);
+
+				imageListView.appendChild(listItem);
+
+			}
+
+		}
+
+	</script>
+
+</body>
+
+</html>
